@@ -41,13 +41,14 @@ def main():
                 # Parse data
                 if line.startswith("{") and line.endswith("}"):
                     line = line[1:-1]  # Remove braces
-                    parts = line.split(",")
+                    parts = line.split(",")  # Split by commas
 
-                    if len(parts) == 4:  # Expecting 4 parts: DHT11 temp, DHT11 humidity, DS18B20 temp
+                    if len(parts) == 3:  # Expecting 3 parts: DHT11 temp, DHT11 humidity, DS18B20 temp
                         try:
-                            dht11_temp = float(parts[0])
-                            dht11_humidity = float(parts[1].replace("%", ""))
-                            ds18b20_temp = float(parts[2])
+                            # Parse the data, ensuring correct formatting
+                            dht11_temp = float(parts[0])  # DHT11 Temperature
+                            dht11_humidity = float(parts[1].replace("%", ""))  # Remove "%" and convert to float
+                            ds18b20_temp = float(parts[2])  # DS18B20 Temperature
 
                             # Get the current date and time
                             timestamp = time.strftime("%Y-%m-%d")  # Date in YYYY-MM-DD format
