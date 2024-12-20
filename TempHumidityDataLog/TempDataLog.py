@@ -43,15 +43,18 @@ def main():
                     line = line[1:-1]  # Remove braces
                     parts = line.split(",")
 
-                    if len(parts) == 3:
+                    if len(parts) == 4:  # Expecting 4 parts: DHT11 temp, DHT11 humidity, DS18B20 temp
                         try:
-                            ambient_temp = float(parts[0])
-                            humidity = float(parts[1].replace("%", ""))
-                            liquid_temp = float(parts[2])
+                            dht11_temp = float(parts[0])
+                            dht11_humidity = float(parts[1].replace("%", ""))
+                            ds18b20_temp = float(parts[2])
 
-                            # Log to Google Sheets
-                            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-                            log_to_google_sheets(sheet, [timestamp, ambient_temp, humidity, liquid_temp])
+                            # Get the current date and time
+                            timestamp = time.strftime("%Y-%m-%d")  # Date in YYYY-MM-DD format
+                            current_time = time.strftime("%H:%M:%S")  # Time in HH:MM:SS format
+
+                            # Log to Google Sheets (Date, Time, DHT11 Temp, DHT11 Humidity, DS18B20 Temp)
+                            log_to_google_sheets(sheet, [timestamp, current_time, dht11_temp, dht11_humidity, ds18b20_temp])
                             print("Data logged to Google Sheets")
 
                         except ValueError:
